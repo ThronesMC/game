@@ -6,6 +6,7 @@ import (
 	"github.com/josscoder/fsmgo/state"
 	"github.com/thronesmc/game/example/config"
 	"github.com/thronesmc/game/game"
+	"github.com/thronesmc/game/game/mechanic/bot"
 	"github.com/thronesmc/game/game/mechanic/nametag"
 	"github.com/thronesmc/game/game/mechanic/spawn"
 	"github.com/thronesmc/game/game/participant"
@@ -39,7 +40,9 @@ func (s *PreGameState) OnUpdate() {
 	g.World.Exec(func(tx *world.Tx) {
 		for p1 := range g.GetParticipants() {
 			for p2 := range g.GetParticipants() {
-				nametag.RefreshNameTag(tx, p1, p2)
+				if !bot.IsBot(p1.Player()) {
+					nametag.RefreshNameTag(tx, p1, p2)
+				}
 			}
 		}
 	})
