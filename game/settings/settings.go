@@ -1,4 +1,4 @@
-package game
+package settings
 
 type Mode string
 

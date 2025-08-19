@@ -8,6 +8,8 @@ import (
 	"github.com/thronesmc/game/game/handler_custom"
 	"github.com/thronesmc/game/game/mechanic/bot"
 	"github.com/thronesmc/game/game/participant"
+	"github.com/thronesmc/game/game/settings"
+	"github.com/thronesmc/game/game/team"
 	"github.com/thronesmc/game/game/utils/maputils"
 	"github.com/thronesmc/game/game/utils/ziputils"
 	"iter"
@@ -27,8 +29,8 @@ import (
 var gameInstance *Game
 
 type Game struct {
-	Settings *Settings
-	Teams    []*Team
+	Settings *settings.Settings
+	Teams    []*team.Team
 
 	WorldHandler  world.Handler
 	PlayerHandler handler_custom.JoinHandler
@@ -43,7 +45,7 @@ type Game struct {
 	WorldFolder string
 }
 
-func NewGame(settings *Settings, teams []*Team, states []state.State, worldHandler world.Handler, playerHandler handler_custom.JoinHandler) *Game {
+func NewGame(settings *settings.Settings, teams []*team.Team, states []state.State, worldHandler world.Handler, playerHandler handler_custom.JoinHandler) *Game {
 	if worldHandler == nil || playerHandler == nil {
 		panic("world handler and player handler cannot be nil")
 	}
@@ -168,11 +170,11 @@ func (g *Game) BroadcastTitle(t title.Title) {
 	})
 }
 
-func (g *Game) RandomAvailableTeam() (*Team, bool) {
-	var available []*Team
-	for _, team := range g.Teams {
-		if team.Teammates.Len() < g.Settings.TeamSize {
-			available = append(available, team)
+func (g *Game) RandomAvailableTeam() (*team.Team, bool) {
+	var available []*team.Team
+	for _, t := range g.Teams {
+		if t.Teammates.Len() < g.Settings.TeamSize {
+			available = append(available, t)
 		}
 	}
 
@@ -183,15 +185,15 @@ func (g *Game) RandomAvailableTeam() (*Team, bool) {
 	return available[rand.Intn(len(available))], true
 }
 
-func (g *Game) BalancedAvailableTeam() (*Team, bool) {
-	var bestTeam *Team
+func (g *Game) BalancedAvailableTeam() (*team.Team, bool) {
+	var bestTeam *team.Team
 	minCount := g.Settings.TeamSize + 1
 
-	for _, team := range g.Teams {
-		count := team.Teammates.Len()
+	for _, t := range g.Teams {
+		count := t.Teammates.Len()
 		if count < g.Settings.TeamSize && count < minCount {
 			minCount = count
-			bestTeam = team
+			bestTeam = t
 		}
 	}
 
@@ -201,18 +203,18 @@ func (g *Game) BalancedAvailableTeam() (*Team, bool) {
 	return bestTeam, true
 }
 
-func (g *Game) AssignTeamToParticipant(pt *participant.Participant, team *Team) {
+func (g *Game) AssignTeamToParticipant(pt *participant.Participant, team *team.Team) {
 	team.Teammates.Store(pt.Player().UUID(), pt)
 }
 
 func (g *Game) RemoveFromTeam(pt *participant.Participant) {
 	playerUUID := pt.Player().UUID()
-	if team, ok := g.TeamOf(pt); ok {
-		team.Teammates.Delete(playerUUID)
+	if t, ok := g.TeamOf(pt); ok {
+		t.Teammates.Delete(playerUUID)
 	}
 }
 
-func (g *Game) GetTeamByID(id string) (*Team, bool) {
+func (g *Game) GetTeamByID(id string) (*team.Team, bool) {
 	for _, t := range g.Teams {
 		if t.GetID() == id {
 			return t, true
@@ -235,11 +237,11 @@ func (g *Game) EnemiesOf(pt *participant.Participant) []*participant.Participant
 	return enemies
 }
 
-func (g *Game) TeamOf(pt *participant.Participant) (*Team, bool) {
+func (g *Game) TeamOf(pt *participant.Participant) (*team.Team, bool) {
 	playerUUID := pt.Player().UUID()
-	for _, team := range g.Teams {
-		if _, ok := team.Teammates.Load(playerUUID); ok {
-			return team, true
+	for _, t := range g.Teams {
+		if _, ok := t.Teammates.Load(playerUUID); ok {
+			return t, true
 		}
 	}
 	return nil, false
