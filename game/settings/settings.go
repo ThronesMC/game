@@ -1,5 +1,7 @@
 package settings
 
+import "github.com/thronesmc/game/game/participant"
+
 type Mode string
 
 const (
@@ -19,11 +21,10 @@ type Settings struct {
 	MaxPlayers int
 	TeamSize   int
 
-	TeammateNameFormat string
-	EnemyNameFormat    string
+	NameFormat nameFormat
 }
 
-func NewStaticSettings(gameName, mapsFolder, mapName string) *Settings {
+func NewStaticSettings(gameName, mapsFolder, mapName string, nameFormat nameFormat) *Settings {
 	if gameName == "" {
 		panic("game name cannot be empty")
 	}
@@ -41,10 +42,11 @@ func NewStaticSettings(gameName, mapsFolder, mapName string) *Settings {
 		MinPlayers: 0,
 		MaxPlayers: -1,
 		TeamSize:   0,
+		NameFormat: nameFormat,
 	}
 }
 
-func NewGameSettings(gameName, mapsFolder, mapName string, mode Mode, minPlayers, maxPlayers, teamSize int, teammateNameFormat, enemyNameFormat string) *Settings {
+func NewGameSettings(gameName, mapsFolder, mapName string, mode Mode, minPlayers, maxPlayers, teamSize int, nameFormat nameFormat) *Settings {
 	if gameName == "" {
 		panic("game name cannot be empty")
 	}
@@ -60,21 +62,22 @@ func NewGameSettings(gameName, mapsFolder, mapName string, mode Mode, minPlayers
 	if minPlayers > maxPlayers {
 		panic("minPlayers cannot be greater than maxPlayers")
 	}
-	if teamSize <= 0 {
-		panic("teamSize must be greater than 0")
-	}
 	if maxPlayers%teamSize != 0 {
 		panic("maxPlayers must be divisible by teamSize")
 	}
+	if teamSize <= 0 {
+		panic("teamSize must be greater than 0")
+	}
 	return &Settings{
-		GameName:           gameName,
-		MapsFolder:         mapsFolder,
-		MapName:            mapName,
-		Mode:               mode,
-		MinPlayers:         minPlayers,
-		MaxPlayers:         maxPlayers,
-		TeamSize:           teamSize,
-		TeammateNameFormat: teammateNameFormat,
-		EnemyNameFormat:    enemyNameFormat,
+		GameName:   gameName,
+		MapsFolder: mapsFolder,
+		MapName:    mapName,
+		Mode:       mode,
+		MinPlayers: minPlayers,
+		MaxPlayers: maxPlayers,
+		TeamSize:   teamSize,
+		NameFormat: nameFormat,
 	}
 }
+
+type nameFormat func(viewer, pt *participant.Participant) string

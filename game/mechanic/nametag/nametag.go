@@ -3,7 +3,6 @@ package nametag
 import (
 	"github.com/df-mc/dragonfly/server/player"
 	"github.com/df-mc/dragonfly/server/world"
-	"github.com/samber/lo"
 	"github.com/sandertv/gophertunnel/minecraft/protocol"
 	"github.com/sandertv/gophertunnel/minecraft/protocol/packet"
 	"github.com/sandertv/gophertunnel/minecraft/text"
@@ -39,11 +38,7 @@ func RefreshNameTag(tx *world.Tx, viewer, pt *participant.Participant) {
 	viewerSession := dfutils.Session(viewerPlayer)
 	md := dfutils.ParseEntityMetadata(viewerSession, ptPlayer)
 
-	nameFormat := lo.If(
-		g.InSameTeam(viewer, pt),
-		g.Settings.TeammateNameFormat,
-	).Else(g.Settings.EnemyNameFormat)
-	md[protocol.EntityDataKeyName] = text.Colourf(nameFormat, pt.Player().Name())
+	md[protocol.EntityDataKeyName] = text.Colourf(g.Settings.NameFormat(viewer, pt))
 
 	dfutils.WritePacket(viewerSession, &packet.SetActorData{
 		EntityRuntimeID: dfutils.EntityRuntimeID(viewerSession, ptPlayer),

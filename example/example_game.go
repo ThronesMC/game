@@ -2,11 +2,13 @@ package main
 
 import (
 	"github.com/josscoder/fsmgo/state"
+	"github.com/sandertv/gophertunnel/minecraft/text"
 	"github.com/thronesmc/game/example/config"
 	gamehandler "github.com/thronesmc/game/example/handler"
 	"github.com/thronesmc/game/example/states"
 	"github.com/thronesmc/game/game"
 	"github.com/thronesmc/game/game/handler"
+	"github.com/thronesmc/game/game/participant"
 	"github.com/thronesmc/game/game/settings"
 	"github.com/thronesmc/game/game/team"
 )
@@ -23,8 +25,14 @@ func NewExampleGame() *game.Game {
 			2,
 			16,
 			4,
-			"<green>%v</green>",
-			"<red>%v</red>",
+			func(viewer, pt *participant.Participant) string {
+				if game.GetGame().InSameTeam(viewer, pt) {
+					return text.Colourf("<green>%v</green>", pt.Player().Name())
+				} else {
+					return text.Colourf("<red>%v</red>", pt.Player().Name())
+
+				}
+			},
 		),
 		[]*team.Team{
 			team.NewTeam("red", "Red", team.Red, &teamCfg),
