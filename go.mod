@@ -1,4 +1,4 @@
-module github.com/thronesmc/game
+module github.com/ThronesMC/game
 
 go 1.24.5
 
