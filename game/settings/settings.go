@@ -62,11 +62,11 @@ func NewGameSettings(gameName, mapsFolder, mapName string, mode Mode, minPlayers
 	if minPlayers > maxPlayers {
 		panic("minPlayers cannot be greater than maxPlayers")
 	}
-	if maxPlayers%teamSize != 0 {
-		panic("maxPlayers must be divisible by teamSize")
-	}
 	if teamSize <= 0 {
 		panic("teamSize must be greater than 0")
+	}
+	if maxPlayers%teamSize != 0 {
+		panic("maxPlayers must be divisible by teamSize")
 	}
 	return &Settings{
 		GameName:   gameName,
