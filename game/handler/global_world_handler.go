@@ -1,10 +1,10 @@
 package handler
 
 import (
+	"github.com/ThronesMC/game/game"
 	"github.com/df-mc/dragonfly/server/block/cube"
 	"github.com/df-mc/dragonfly/server/world"
 	"github.com/go-gl/mathgl/mgl64"
-	"github.com/thronesmc/game/game"
 )
 
 type GlobalWorldHandler struct{}

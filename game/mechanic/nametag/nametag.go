@@ -1,14 +1,14 @@
 package nametag
 
 import (
+	"github.com/ThronesMC/game/game"
+	"github.com/ThronesMC/game/game/participant"
+	"github.com/ThronesMC/game/game/utils/dfutils"
 	"github.com/df-mc/dragonfly/server/player"
 	"github.com/df-mc/dragonfly/server/world"
 	"github.com/sandertv/gophertunnel/minecraft/protocol"
 	"github.com/sandertv/gophertunnel/minecraft/protocol/packet"
 	"github.com/sandertv/gophertunnel/minecraft/text"
-	"github.com/thronesmc/game/game"
-	"github.com/thronesmc/game/game/participant"
-	"github.com/thronesmc/game/game/utils/dfutils"
 )
 
 // RefreshNameTag updates how `pt`’s name tag is displayed to `viewer`,

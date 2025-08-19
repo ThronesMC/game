@@ -1,11 +1,11 @@
 package command
 
 import (
+	"github.com/ThronesMC/game/game"
 	"github.com/df-mc/dragonfly/server/cmd"
 	"github.com/df-mc/dragonfly/server/player"
 	"github.com/df-mc/dragonfly/server/world"
 	"github.com/sandertv/gophertunnel/minecraft/text"
-	"github.com/thronesmc/game/game"
 )
 
 type ResumeCommand struct {

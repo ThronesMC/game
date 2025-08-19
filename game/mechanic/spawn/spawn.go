@@ -1,7 +1,7 @@
 package spawn
 
 import (
-	"github.com/thronesmc/game/game/utils/maputils"
+	"github.com/ThronesMC/game/game/utils/maputils"
 	"math/rand"
 
 	"github.com/google/uuid"

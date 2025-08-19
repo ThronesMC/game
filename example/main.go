@@ -1,12 +1,12 @@
 package main
 
 import (
+	"github.com/ThronesMC/game/game/command"
+	"github.com/ThronesMC/game/game/handler"
+	"github.com/ThronesMC/game/game/handler_custom"
 	"github.com/df-mc/dragonfly/server"
 	"github.com/df-mc/dragonfly/server/player/chat"
 	"github.com/df-mc/dragonfly/server/world"
-	"github.com/thronesmc/game/game/command"
-	"github.com/thronesmc/game/game/handler"
-	"github.com/thronesmc/game/game/handler_custom"
 	"log/slog"
 )
 

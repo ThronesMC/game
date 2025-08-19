@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"github.com/thronesmc/game/game"
-	"github.com/thronesmc/game/game/handler_custom"
+	"github.com/ThronesMC/game/game"
+	"github.com/ThronesMC/game/game/handler_custom"
 	"net"
 	"time"
 

@@ -1,7 +1,7 @@
 package damager
 
 import (
-	"github.com/thronesmc/game/game/utils/maputils"
+	"github.com/ThronesMC/game/game/utils/maputils"
 	"time"
 
 	"github.com/df-mc/dragonfly/server/player"

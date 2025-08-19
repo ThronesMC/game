@@ -2,11 +2,11 @@ package team
 
 import (
 	"fmt"
+	"github.com/ThronesMC/game/game/config"
+	"github.com/ThronesMC/game/game/participant"
+	"github.com/ThronesMC/game/game/utils/maputils"
 	"github.com/df-mc/dragonfly/server/item"
 	"github.com/google/uuid"
-	"github.com/thronesmc/game/game/config"
-	"github.com/thronesmc/game/game/participant"
-	"github.com/thronesmc/game/game/utils/maputils"
 )
 
 type Team struct {

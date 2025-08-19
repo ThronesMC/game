@@ -1,8 +1,8 @@
 package command
 
 import (
+	bots2 "github.com/ThronesMC/game/game/command/bots"
 	"github.com/df-mc/dragonfly/server/cmd"
-	bots2 "github.com/thronesmc/game/game/command/bots"
 )
 
 func RegisterDevCommands() {

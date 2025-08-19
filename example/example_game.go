@@ -1,16 +1,16 @@
 package main
 
 import (
+	"github.com/ThronesMC/game/example/config"
+	gamehandler "github.com/ThronesMC/game/example/handler"
+	"github.com/ThronesMC/game/example/states"
+	"github.com/ThronesMC/game/game"
+	"github.com/ThronesMC/game/game/handler"
+	"github.com/ThronesMC/game/game/participant"
+	"github.com/ThronesMC/game/game/settings"
+	"github.com/ThronesMC/game/game/team"
 	"github.com/josscoder/fsmgo/state"
 	"github.com/sandertv/gophertunnel/minecraft/text"
-	"github.com/thronesmc/game/example/config"
-	gamehandler "github.com/thronesmc/game/example/handler"
-	"github.com/thronesmc/game/example/states"
-	"github.com/thronesmc/game/game"
-	"github.com/thronesmc/game/game/handler"
-	"github.com/thronesmc/game/game/participant"
-	"github.com/thronesmc/game/game/settings"
-	"github.com/thronesmc/game/game/team"
 )
 
 func NewExampleGame() *game.Game {

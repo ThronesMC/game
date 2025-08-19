@@ -1,7 +1,7 @@
 package game
 
 import (
-	"github.com/thronesmc/game/game/utils/randomskins/skin"
+	"github.com/ThronesMC/game/game/utils/randomskins/skin"
 	"log"
 )
 

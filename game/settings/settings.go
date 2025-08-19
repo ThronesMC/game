@@ -1,6 +1,6 @@
 package settings
 
-import "github.com/thronesmc/game/game/participant"
+import "github.com/ThronesMC/game/game/participant"
 
 type Mode string
 

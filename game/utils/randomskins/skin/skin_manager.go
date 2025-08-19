@@ -3,8 +3,8 @@ package skin
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/thronesmc/game/game/utils/randomskins/config"
-	"github.com/thronesmc/game/game/utils/randomskins/utils"
+	"github.com/ThronesMC/game/game/utils/randomskins/config"
+	"github.com/ThronesMC/game/game/utils/randomskins/utils"
 	"image"
 	"image/draw"
 	"image/png"

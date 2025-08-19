@@ -1,11 +1,11 @@
 package bots
 
 import (
+	"github.com/ThronesMC/game/game/mechanic/bot"
 	"github.com/df-mc/dragonfly/server/cmd"
 	"github.com/df-mc/dragonfly/server/player"
 	"github.com/df-mc/dragonfly/server/world"
 	"github.com/sandertv/gophertunnel/minecraft/text"
-	"github.com/thronesmc/game/game/mechanic/bot"
 )
 
 type RemoveSubCommand struct {

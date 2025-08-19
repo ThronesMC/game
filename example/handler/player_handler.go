@@ -1,16 +1,16 @@
 package handler
 
 import (
+	"github.com/ThronesMC/game/example/config"
+	"github.com/ThronesMC/game/game"
+	"github.com/ThronesMC/game/game/handler_custom"
+	"github.com/ThronesMC/game/game/mechanic/cage"
+	"github.com/ThronesMC/game/game/mechanic/spawn"
+	"github.com/ThronesMC/game/game/utils/playerutils"
 	"github.com/df-mc/dragonfly/server/block"
 	"github.com/df-mc/dragonfly/server/block/cube"
 	"github.com/df-mc/dragonfly/server/player"
 	"github.com/sandertv/gophertunnel/minecraft/text"
-	"github.com/thronesmc/game/example/config"
-	"github.com/thronesmc/game/game"
-	"github.com/thronesmc/game/game/handler_custom"
-	"github.com/thronesmc/game/game/mechanic/cage"
-	"github.com/thronesmc/game/game/mechanic/spawn"
-	"github.com/thronesmc/game/game/utils/playerutils"
 )
 
 type PlayerHandler struct {

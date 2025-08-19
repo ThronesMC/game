@@ -1,15 +1,15 @@
 package states
 
 import (
+	"github.com/ThronesMC/game/example/config"
+	"github.com/ThronesMC/game/game"
+	"github.com/ThronesMC/game/game/mechanic/bot"
+	"github.com/ThronesMC/game/game/mechanic/nametag"
+	"github.com/ThronesMC/game/game/mechanic/spawn"
+	"github.com/ThronesMC/game/game/participant"
 	"github.com/df-mc/dragonfly/server/player/bossbar"
 	"github.com/df-mc/dragonfly/server/world"
 	"github.com/josscoder/fsmgo/state"
-	"github.com/thronesmc/game/example/config"
-	"github.com/thronesmc/game/game"
-	"github.com/thronesmc/game/game/mechanic/bot"
-	"github.com/thronesmc/game/game/mechanic/nametag"
-	"github.com/thronesmc/game/game/mechanic/spawn"
-	"github.com/thronesmc/game/game/participant"
 	"log"
 	"math"
 	"time"

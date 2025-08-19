@@ -1,9 +1,9 @@
 package participant
 
 import (
+	"github.com/ThronesMC/game/game/config"
 	"github.com/df-mc/dragonfly/server/player"
 	"github.com/df-mc/dragonfly/server/world"
-	"github.com/thronesmc/game/game/config"
 )
 
 type Participant struct {

@@ -1,10 +1,10 @@
 package states
 
 import (
+	"github.com/ThronesMC/game/game"
+	"github.com/ThronesMC/game/game/participant"
 	"github.com/df-mc/dragonfly/server/player/bossbar"
 	"github.com/josscoder/fsmgo/state"
-	"github.com/thronesmc/game/game"
-	"github.com/thronesmc/game/game/participant"
 	"log"
 	"math"
 	"time"

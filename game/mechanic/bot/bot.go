@@ -1,6 +1,7 @@
 package bot
 
 import (
+	"github.com/ThronesMC/game/game/utils/dfutils"
 	"github.com/df-mc/dragonfly/server/block/cube"
 	"github.com/df-mc/dragonfly/server/player"
 	"github.com/df-mc/dragonfly/server/player/skin"
@@ -9,7 +10,6 @@ import (
 	"github.com/df-mc/npc"
 	"github.com/go-gl/mathgl/mgl64"
 	"github.com/samber/lo"
-	"github.com/thronesmc/game/game/utils/dfutils"
 )
 
 func GetBotNames(tx *world.Tx) []string {

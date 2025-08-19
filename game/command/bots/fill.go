@@ -2,10 +2,10 @@ package bots
 
 import (
 	"fmt"
+	"github.com/ThronesMC/game/game"
 	"github.com/df-mc/dragonfly/server/cmd"
 	"github.com/df-mc/dragonfly/server/player"
 	"github.com/df-mc/dragonfly/server/world"
-	"github.com/thronesmc/game/game"
 )
 
 type FillSubCommand struct {

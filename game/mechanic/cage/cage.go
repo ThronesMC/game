@@ -1,11 +1,11 @@
 package cage
 
 import (
+	"github.com/ThronesMC/game/game/utils/maputils"
 	"github.com/df-mc/dragonfly/server/block"
 	"github.com/df-mc/dragonfly/server/block/cube"
 	"github.com/df-mc/dragonfly/server/world"
 	"github.com/google/uuid"
-	"github.com/thronesmc/game/game/utils/maputils"
 )
 
 var cages = maputils.NewMap[uuid.UUID, []cube.Pos]()
