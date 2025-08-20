@@ -1,6 +1,7 @@
 package states
 
 import (
+	"fmt"
 	"github.com/ThronesMC/game/game"
 	"github.com/ThronesMC/game/game/participant"
 	"github.com/df-mc/dragonfly/server/player/bossbar"
@@ -27,12 +28,19 @@ func (s *EndGameState) OnStart() {
 func (s *EndGameState) OnUpdate() {
 	log.Println("EndGameState onUpdate")
 
-	duration := s.GetDuration().Seconds()
-	remaining := s.GetRemainingTime().Seconds()
+	duration := float64(s.GetDuration().Milliseconds())
+	remaining := float64(s.GetRemainingTime().Milliseconds())
 	progress := math.Max(0, math.Min(1, remaining/duration))
 
+	remainingSecs := float64(s.GetRemainingTime().Milliseconds()) / 1000.0
+	remainingStr := fmt.Sprintf("%.1f s", remainingSecs)
+
 	game.GetGame().ParticipantsCallback(func(pt *participant.Participant) {
-		pt.Player().SendBossBar(bossbar.New("EndGameState").WithColour(bossbar.Red()).WithHealthPercentage(progress))
+		pt.Player().SendBossBar(
+			bossbar.New("EndGameState - " + remainingStr).
+				WithColour(bossbar.Red()).
+				WithHealthPercentage(progress),
+		)
 	})
 }
 

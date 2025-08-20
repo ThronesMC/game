@@ -7,7 +7,7 @@ require (
 	github.com/df-mc/npc v1.0.5
 	github.com/go-gl/mathgl v1.2.0
 	github.com/google/uuid v1.6.0
-	github.com/josscoder/fsmgo v0.0.0-20250726215329-0f5860007176
+	github.com/josscoder/fsmgo v0.0.0-20250819235246-73a9bb9472c9
 	github.com/samber/lo v1.51.0
 	github.com/sandertv/gophertunnel v1.49.0
 )

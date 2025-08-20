@@ -16,6 +16,7 @@ import (
 	"math/rand"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/sandertv/gophertunnel/minecraft/text"
 
@@ -50,7 +51,7 @@ func NewGame(settings *settings.Settings, teams []*team.Team, states []state.Sta
 		panic("world handler and player handler cannot be nil")
 	}
 
-	series := state.NewScheduledStateSeries(states)
+	series := state.NewScheduledStateSeries(states, 100*time.Millisecond)
 
 	game := &Game{
 		Settings:      settings,
