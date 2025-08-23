@@ -118,8 +118,9 @@ func GetMapData[TM config.MapData]() TM {
 	return gameInstance.mapConfig.(TM)
 }
 
-func (g *Game) GetParticipant(p *player.Player) (*participant.Participant, bool) {
-	return g.Participants.Load(p.UUID())
+func (g *Game) GetParticipant(p *player.Player) *participant.Participant {
+	pt, _ := g.Participants.Load(p.UUID())
+	return pt
 }
 
 func (g *Game) GetParticipants() iter.Seq[*participant.Participant] {
