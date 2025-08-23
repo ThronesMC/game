@@ -1,4 +1,4 @@
-package handler
+package handlerutils
 
 import (
 	"github.com/df-mc/dragonfly/server/block/cube"

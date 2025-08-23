@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/ThronesMC/game/game/command"
-	"github.com/ThronesMC/game/game/handler"
 	"github.com/ThronesMC/game/game/handler_custom"
 	"github.com/df-mc/dragonfly/server"
 	"github.com/df-mc/dragonfly/server/player/chat"
@@ -41,8 +40,6 @@ func main() {
 	w.SetTime(3000)
 	w.StopTime()
 	g.World = w
-
-	w.Handle(handler.GlobalWorldHandler{})
 
 	command.RegisterDevCommands()
 

@@ -33,7 +33,6 @@ type Game struct {
 	Settings *settings.Settings
 	Teams    []*team.Team
 
-	WorldHandler  world.Handler
 	PlayerHandler handler_custom.JoinHandler
 
 	StateSeries  *state.ScheduledStateSeries
@@ -46,9 +45,9 @@ type Game struct {
 	WorldFolder string
 }
 
-func NewGame(settings *settings.Settings, teams []*team.Team, states []state.State, worldHandler world.Handler, playerHandler handler_custom.JoinHandler) *Game {
-	if worldHandler == nil || playerHandler == nil {
-		panic("world handler and player handler cannot be nil")
+func NewGame(settings *settings.Settings, teams []*team.Team, states []state.State, playerHandler handler_custom.JoinHandler) *Game {
+	if playerHandler == nil {
+		panic("player handler cannot be nil")
 	}
 
 	series := state.NewScheduledStateSeries(states, 100*time.Millisecond)
@@ -56,7 +55,6 @@ func NewGame(settings *settings.Settings, teams []*team.Team, states []state.Sta
 	game := &Game{
 		Settings:      settings,
 		Teams:         teams,
-		WorldHandler:  worldHandler,
 		PlayerHandler: playerHandler,
 		StateSeries:   series,
 		Participants:  maputils.NewMap[uuid.UUID, *participant.Participant](),

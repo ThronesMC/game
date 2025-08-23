@@ -5,10 +5,10 @@ import (
 	gamehandler "github.com/ThronesMC/game/example/handler"
 	"github.com/ThronesMC/game/example/states"
 	"github.com/ThronesMC/game/game"
-	"github.com/ThronesMC/game/game/handler"
 	"github.com/ThronesMC/game/game/participant"
 	"github.com/ThronesMC/game/game/settings"
 	"github.com/ThronesMC/game/game/team"
+	"github.com/ThronesMC/game/game/utils/handlerutils"
 	"github.com/josscoder/fsmgo/state"
 	"github.com/sandertv/gophertunnel/minecraft/text"
 )
@@ -44,9 +44,7 @@ func NewExampleGame() *game.Game {
 			states.NewPreGameStateState(),
 			states.NewEndGameState(),
 		},
-		handler.WorldChainHandlers(gamehandler.WorldHandler{}),
-		handler.PlayerChainHandlers(
-			handler.GlobalPlayerHandler{},
+		handlerutils.PlayerChainHandlers(
 			gamehandler.PlayerHandler{},
 		),
 	)
@@ -55,6 +53,8 @@ func NewExampleGame() *game.Game {
 	if err := g.LoadGameMapWithConfig(&cfg); err != nil {
 		panic(err)
 	}
+
+	g.World.Handle(handlerutils.WorldChainHandlers(gamehandler.WorldHandler{}))
 
 	return g
 }
