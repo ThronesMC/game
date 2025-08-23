@@ -1,6 +1,7 @@
 package states
 
 import (
+	"fmt"
 	"github.com/ThronesMC/game/example/config"
 	"github.com/ThronesMC/game/game"
 	"github.com/ThronesMC/game/game/mechanic/bot"
@@ -47,12 +48,19 @@ func (s *PreGameState) OnUpdate() {
 		}
 	})
 
-	duration := s.GetDuration().Seconds()
-	remaining := s.GetRemainingTime().Seconds()
+	duration := float64(s.GetDuration().Milliseconds())
+	remaining := float64(s.GetRemainingTime().Milliseconds())
 	progress := math.Max(0, math.Min(1, remaining/duration))
 
+	remainingSecs := float64(s.GetRemainingTime().Milliseconds()) / 1000.0
+	remainingStr := fmt.Sprintf("%.1f s", remainingSecs)
+
 	g.ParticipantsCallback(func(pt *participant.Participant) {
-		pt.Player().SendBossBar(bossbar.New("PreGameState").WithColour(bossbar.Grey()).WithHealthPercentage(progress))
+		pt.Player().SendBossBar(
+			bossbar.New("PreGameState - " + remainingStr).
+				WithColour(bossbar.Grey()).
+				WithHealthPercentage(progress),
+		)
 	})
 }
 
