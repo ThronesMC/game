@@ -47,6 +47,7 @@ func NewExampleGame() *game.Game {
 		handlerutils.PlayerChainHandlers(
 			gamehandler.PlayerHandler{},
 		),
+		gamehandler.InventoryHandler{},
 	)
 
 	var cfg config.ExampleData

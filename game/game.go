@@ -12,6 +12,7 @@ import (
 	"github.com/ThronesMC/game/game/team"
 	"github.com/ThronesMC/game/game/utils/maputils"
 	"github.com/ThronesMC/game/game/utils/ziputils"
+	"github.com/df-mc/dragonfly/server/item/inventory"
 	"iter"
 	"math/rand"
 	"os"
@@ -33,7 +34,8 @@ type Game struct {
 	Settings *settings.Settings
 	Teams    []*team.Team
 
-	PlayerHandler handler_custom.JoinHandler
+	PlayerHandler    handler_custom.JoinHandler
+	InventoryHandler inventory.Handler
 
 	StateSeries  *state.ScheduledStateSeries
 	Participants *maputils.Map[uuid.UUID, *participant.Participant]
@@ -45,7 +47,7 @@ type Game struct {
 	WorldFolder string
 }
 
-func NewGame(settings *settings.Settings, teams []*team.Team, states []state.State, playerHandler handler_custom.JoinHandler) *Game {
+func NewGame(settings *settings.Settings, teams []*team.Team, states []state.State, playerHandler handler_custom.JoinHandler, invHandler inventory.Handler) *Game {
 	if playerHandler == nil {
 		panic("player handler cannot be nil")
 	}
@@ -53,11 +55,12 @@ func NewGame(settings *settings.Settings, teams []*team.Team, states []state.Sta
 	series := state.NewScheduledStateSeries(states, 100*time.Millisecond)
 
 	game := &Game{
-		Settings:      settings,
-		Teams:         teams,
-		PlayerHandler: playerHandler,
-		StateSeries:   series,
-		Participants:  maputils.NewMap[uuid.UUID, *participant.Participant](),
+		Settings:         settings,
+		Teams:            teams,
+		PlayerHandler:    playerHandler,
+		InventoryHandler: invHandler,
+		StateSeries:      series,
+		Participants:     maputils.NewMap[uuid.UUID, *participant.Participant](),
 	}
 	gameInstance = game
 	return game
