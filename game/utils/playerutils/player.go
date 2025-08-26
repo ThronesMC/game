@@ -6,32 +6,34 @@ import (
 )
 
 type ResetOpts struct {
-	ResetInventory    bool
-	ResetArmour       bool
 	ClearEffects      bool
-	ResetXP           bool
-	ResetHealth       bool
-	ResetFood         bool
-	ResetScale        bool
 	Extinguish        bool
-	ResetFallDistance bool
 	HealAmount        float64
 	MaxHealth         float64
+	ResetArmour       bool
+	ResetFallDistance bool
+	ResetFood         bool
+	ResetHealth       bool
+	ResetInventory    bool
+	ResetMobility     bool
+	ResetScale        bool
+	ResetXP           bool
 }
 
 func DefaultResetOpts() ResetOpts {
 	return ResetOpts{
-		ResetInventory:    true,
-		ResetArmour:       true,
 		ClearEffects:      true,
-		ResetXP:           true,
-		ResetHealth:       true,
-		ResetFood:         true,
-		ResetScale:        true,
 		Extinguish:        true,
-		ResetFallDistance: true,
 		HealAmount:        20,
 		MaxHealth:         20,
+		ResetArmour:       true,
+		ResetFallDistance: true,
+		ResetFood:         true,
+		ResetHealth:       true,
+		ResetInventory:    true,
+		ResetMobility:     true,
+		ResetScale:        true,
+		ResetXP:           true,
 	}
 }
 
@@ -78,5 +80,8 @@ func ResetPlayer(p *player.Player, opts *ResetOpts) {
 	}
 	if opts.ResetFood {
 		p.SetFood(20)
+	}
+	if opts.ResetMobility {
+		p.SetMobile()
 	}
 }
