@@ -212,18 +212,18 @@ func (g *Game) AssignTeamToParticipant(pt *participant.Participant, team *team.T
 
 func (g *Game) RemoveFromTeam(pt *participant.Participant) {
 	playerUUID := pt.Player().UUID()
-	if t, ok := g.TeamOf(pt); ok {
+	if t := g.TeamOf(pt); t != nil {
 		t.Teammates.Delete(playerUUID)
 	}
 }
 
-func (g *Game) GetTeamByID(id string) (*team.Team, bool) {
+func (g *Game) GetTeamByID(id string) *team.Team {
 	for _, t := range g.Teams {
 		if t.GetID() == id {
-			return t, true
+			return t
 		}
 	}
-	return nil, false
+	return nil
 }
 
 func (g *Game) EnemiesOf(pt *participant.Participant) []*participant.Participant {
@@ -240,20 +240,20 @@ func (g *Game) EnemiesOf(pt *participant.Participant) []*participant.Participant
 	return enemies
 }
 
-func (g *Game) TeamOf(pt *participant.Participant) (*team.Team, bool) {
+func (g *Game) TeamOf(pt *participant.Participant) *team.Team {
 	playerUUID := pt.Player().UUID()
 	for _, t := range g.Teams {
 		if _, ok := t.Teammates.Load(playerUUID); ok {
-			return t, true
+			return t
 		}
 	}
-	return nil, false
+	return nil
 }
 
 func (g *Game) InSameTeam(a, b *participant.Participant) bool {
-	teamA, okA := g.TeamOf(a)
-	teamB, okB := g.TeamOf(b)
-	return okA && okB && teamA.GetID() == teamB.GetID()
+	teamA := g.TeamOf(a)
+	teamB := g.TeamOf(b)
+	return teamA != nil && teamA == teamB
 }
 
 func (g *Game) Join(p *player.Player) error {

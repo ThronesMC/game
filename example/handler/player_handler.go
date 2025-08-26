@@ -25,8 +25,8 @@ func (PlayerHandler) HandleJoin(p *player.Player) {
 		return
 	}
 
-	pt, ok := g.GetParticipant(p)
-	if !ok {
+	pt := g.GetParticipant(p)
+	if pt != nil {
 		p.Disconnect("participant not found.")
 		return
 	}
@@ -66,15 +66,8 @@ func (PlayerHandler) HandleJoin(p *player.Player) {
 func (PlayerHandler) HandleQuit(p *player.Player) {
 	g := game.GetGame()
 
-	pt, ok := g.GetParticipant(p)
-	if !ok {
-		return
-	}
-
-	team, ok := g.TeamOf(pt)
-	if !ok {
-		return
-	}
+	pt := g.GetParticipant(p)
+	team := g.TeamOf(pt)
 
 	spawn.FreePlayerSpawn(team.GetID(), p.UUID())
 	g.RemoveFromTeam(pt)
