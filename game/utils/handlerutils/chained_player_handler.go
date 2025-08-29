@@ -1,11 +1,9 @@
 package handlerutils
 
 import (
-	"fmt"
 	"github.com/ThronesMC/game/game"
 	"github.com/ThronesMC/game/game/handler_custom"
 	"net"
-	"reflect"
 	"time"
 
 	"github.com/df-mc/dragonfly/server/block/cube"
@@ -28,8 +26,6 @@ func (cph ChainedPlayerHandler) HandleJoin(p *player.Player) {
 		p.Disconnect(err.Error())
 		return
 	}
-	fmt.Println(cph.Middle)
-	fmt.Println(reflect.TypeOf(cph.Middle))
 	if cph.Middle != nil {
 		cph.Middle.HandleJoin(p)
 	}
