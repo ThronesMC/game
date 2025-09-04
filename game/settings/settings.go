@@ -3,6 +3,7 @@ package settings
 import (
 	"github.com/ThronesMC/game/game/participant"
 	"github.com/df-mc/dragonfly/server/player"
+	"github.com/df-mc/dragonfly/server/world"
 )
 
 type Mode string
@@ -83,4 +84,4 @@ func NewGameSettings(gameName, mapsFolder, mapName string, mode Mode, minPlayers
 	}
 }
 
-type nameFormat func(viewer *player.Player, pt *participant.Participant) string
+type nameFormat func(tx *world.Tx, viewer *player.Player, pt *participant.Participant) string

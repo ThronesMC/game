@@ -10,6 +10,7 @@ import (
 	"github.com/df-mc/dragonfly/server/block"
 	"github.com/df-mc/dragonfly/server/block/cube"
 	"github.com/df-mc/dragonfly/server/player"
+	"github.com/df-mc/dragonfly/server/world"
 	"github.com/sandertv/gophertunnel/minecraft/text"
 )
 
@@ -57,10 +58,13 @@ func (PlayerHandler) HandleJoin(p *player.Player) {
 
 	p.Messagef(text.Colourf("<orange>You joined team %s", team.GetColour().AsTextColour(team.GetName())))
 
-	g.BroadcastMessagef(
-		"<yellow>%s</yellow> <green>has joined (<yellow>%d</yellow>/<yellow>%d</yellow>)!</green>",
-		p.Name(), g.ParticipantLen(), g.Settings.MaxPlayers,
-	)
+	g.World.Exec(func(tx *world.Tx) {
+		g.BroadcastMessagef(
+			tx,
+			"<yellow>%s</yellow> <green>has joined (<yellow>%d</yellow>/<yellow>%d</yellow>)!</green>",
+			p.Name(), g.ParticipantLen(), g.Settings.MaxPlayers,
+		)
+	})
 }
 
 func (PlayerHandler) HandleQuit(p *player.Player) {
@@ -80,8 +84,11 @@ func (PlayerHandler) HandleQuit(p *player.Player) {
 	g.RemoveFromTeam(pt)
 	cage.RemoveCage(p.Tx(), p.UUID())
 
-	g.BroadcastMessagef(
-		"<yellow>%s</yellow> <red>has left (<yellow>%d</yellow>/<yellow>%d</yellow>)!</red>",
-		p.Name(), g.ParticipantLen()-1, g.Settings.MaxPlayers,
-	)
+	g.World.Exec(func(tx *world.Tx) {
+		g.BroadcastMessagef(
+			tx,
+			"<yellow>%s</yellow> <red>has left (<yellow>%d</yellow>/<yellow>%d</yellow>)!</red>",
+			p.Name(), g.ParticipantLen()-1, g.Settings.MaxPlayers,
+		)
+	})
 }

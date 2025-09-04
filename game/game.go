@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"github.com/ThronesMC/game/game/config"
 	"github.com/ThronesMC/game/game/handler_custom"
-	"github.com/ThronesMC/game/game/mechanic/bot"
 	"github.com/ThronesMC/game/game/participant"
 	"github.com/ThronesMC/game/game/settings"
 	"github.com/ThronesMC/game/game/team"
@@ -149,27 +148,25 @@ func (g *Game) IsFull() bool {
 
 func (g *Game) ParticipantsCallback(fn func(pt *participant.Participant)) {
 	for _, pt := range g.Participants.Map() {
-		if !bot.IsBot(pt.Player()) {
-			fn(pt)
-		}
+		fn(pt)
 	}
 }
 
-func (g *Game) BroadcastMessage(msg string) {
+func (g *Game) BroadcastMessage(tx *world.Tx, msg string) {
 	g.ParticipantsCallback(func(pt *participant.Participant) {
-		pt.Player().Message(text.Colourf("%s", msg))
+		pt.TXPlayer(tx).Message(text.Colourf("%s", msg))
 	})
 }
 
-func (g *Game) BroadcastMessagef(format string, args ...any) {
+func (g *Game) BroadcastMessagef(tx *world.Tx, format string, args ...any) {
 	g.ParticipantsCallback(func(pt *participant.Participant) {
-		pt.Player().Message(text.Colourf(format, args...))
+		pt.TXPlayer(tx).Message(text.Colourf(format, args...))
 	})
 }
 
-func (g *Game) BroadcastTitle(t title.Title) {
+func (g *Game) BroadcastTitle(tx *world.Tx, t title.Title) {
 	g.ParticipantsCallback(func(pt *participant.Participant) {
-		pt.Player().SendTitle(t)
+		pt.TXPlayer(tx).SendTitle(t)
 	})
 }
 
@@ -269,11 +266,11 @@ func (g *Game) Quit(p *player.Player) {
 	g.Participants.Delete(p.UUID())
 }
 
-func (g *Game) Stop() {
+func (g *Game) Stop(tx *world.Tx) {
 	g.StateSeries.End()
 
 	g.ParticipantsCallback(func(pt *participant.Participant) {
-		pt.Player().Disconnect("game server shutdown")
+		pt.TXPlayer(tx).Disconnect("game server shutdown")
 	})
 
 	if err := os.RemoveAll(g.WorldFolder); err != nil {

@@ -9,7 +9,7 @@ import (
 	_ "unsafe"
 )
 
-//go:linkname Session github.com/df-mc/dragonfly/server/player.(*Player).session
+//go:linkname Session github.com/df-mc/dragonfly/server/player.(*TXPlayer).session
 func Session(_ *player.Player) *session.Session
 
 //go:linkname WritePacket github.com/df-mc/dragonfly/server/session.(*Session).writePacket

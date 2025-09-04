@@ -41,8 +41,8 @@ func (s *PreGameState) OnUpdate() {
 	g.World.Exec(func(tx *world.Tx) {
 		for p1 := range g.GetParticipants() {
 			for p2 := range g.GetParticipants() {
-				if !bot.IsBot(p1.Player()) {
-					nametag.RefreshNameTag(tx, p1, p2)
+				if !bot.IsBot(p1.TXPlayer(tx)) {
+					nametag.RefreshNameTag(tx, p1.TXPlayer(tx), p2)
 				}
 			}
 		}
@@ -55,12 +55,14 @@ func (s *PreGameState) OnUpdate() {
 	remainingSecs := float64(s.GetRemainingTime().Milliseconds()) / 1000.0
 	remainingStr := fmt.Sprintf("%.1f s", remainingSecs)
 
-	g.ParticipantsCallback(func(pt *participant.Participant) {
-		pt.Player().SendBossBar(
-			bossbar.New("PreGameState - " + remainingStr).
-				WithColour(bossbar.Grey()).
-				WithHealthPercentage(progress),
-		)
+	g.World.Exec(func(tx *world.Tx) {
+		g.ParticipantsCallback(func(pt *participant.Participant) {
+			pt.TXPlayer(tx).SendBossBar(
+				bossbar.New("PreGameState - " + remainingStr).
+					WithColour(bossbar.Grey()).
+					WithHealthPercentage(progress),
+			)
+		})
 	})
 }
 

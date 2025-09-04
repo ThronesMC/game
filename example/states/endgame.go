@@ -5,6 +5,7 @@ import (
 	"github.com/ThronesMC/game/game"
 	"github.com/ThronesMC/game/game/participant"
 	"github.com/df-mc/dragonfly/server/player/bossbar"
+	"github.com/df-mc/dragonfly/server/world"
 	"github.com/josscoder/fsmgo/state"
 	"log"
 	"math"
@@ -35,12 +36,14 @@ func (s *EndGameState) OnUpdate() {
 	remainingSecs := float64(s.GetRemainingTime().Milliseconds()) / 1000.0
 	remainingStr := fmt.Sprintf("%.1f s", remainingSecs)
 
-	game.GetGame().ParticipantsCallback(func(pt *participant.Participant) {
-		pt.Player().SendBossBar(
-			bossbar.New("EndGameState - " + remainingStr).
-				WithColour(bossbar.Red()).
-				WithHealthPercentage(progress),
-		)
+	game.GetGame().World.Exec(func(tx *world.Tx) {
+		game.GetGame().ParticipantsCallback(func(pt *participant.Participant) {
+			pt.TXPlayer(tx).SendBossBar(
+				bossbar.New("EndGameState - " + remainingStr).
+					WithColour(bossbar.Red()).
+					WithHealthPercentage(progress),
+			)
+		})
 	})
 }
 
