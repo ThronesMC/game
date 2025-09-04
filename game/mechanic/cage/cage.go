@@ -13,7 +13,7 @@ var cages = maputils.NewMap[uuid.UUID, []cube.Pos]()
 // BuildCage creates a cage at the given position for a player.
 func BuildCage(tx *world.Tx, playerUUID uuid.UUID, pos cube.Pos, cageBlock world.Block) {
 	var blocks []cube.Pos
-	for i := -1; i < 3; i++ {
+	for i := 0; i < 2; i++ {
 		blocks = append(blocks, pos.Add(cube.Pos{-1, i, 0}))
 		blocks = append(blocks, pos.Add(cube.Pos{1, i, 0}))
 		blocks = append(blocks, pos.Add(cube.Pos{0, i, -1}))
