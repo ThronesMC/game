@@ -17,6 +17,7 @@ import (
 	"math/rand"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/df-mc/dragonfly/server/player"
 	"github.com/df-mc/dragonfly/server/player/title"
@@ -34,7 +35,7 @@ type Game struct {
 	PlayerHandler    handler_custom.JoinHandler
 	InventoryHandler inventory.Handler
 
-	StateSeries  *state.Series
+	StateSeries  *state.ScheduledStateSeries
 	Participants *maputils.Map[uuid.UUID, *participant.Participant]
 
 	MapLoaded bool
@@ -54,7 +55,7 @@ func NewGame(settings *settings.Settings, teams []*team.Team, states []state.Sta
 		Teams:            teams,
 		PlayerHandler:    playerHandler,
 		InventoryHandler: invHandler,
-		StateSeries:      state.NewStateSeries(states),
+		StateSeries:      state.NewScheduledStateSeries(states, 1*time.Second),
 		Participants:     maputils.NewMap[uuid.UUID, *participant.Participant](),
 	}
 	gameInstance = game
