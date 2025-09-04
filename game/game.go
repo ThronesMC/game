@@ -12,13 +12,11 @@ import (
 	"github.com/ThronesMC/game/game/utils/maputils"
 	"github.com/ThronesMC/game/game/utils/ziputils"
 	"github.com/df-mc/dragonfly/server/item/inventory"
+	"github.com/sandertv/gophertunnel/minecraft/text"
 	"iter"
 	"math/rand"
 	"os"
 	"path/filepath"
-	"time"
-
-	"github.com/sandertv/gophertunnel/minecraft/text"
 
 	"github.com/df-mc/dragonfly/server/player"
 	"github.com/df-mc/dragonfly/server/player/title"
@@ -36,7 +34,7 @@ type Game struct {
 	PlayerHandler    handler_custom.JoinHandler
 	InventoryHandler inventory.Handler
 
-	StateSeries  *state.ScheduledStateSeries
+	StateSeries  *state.Series
 	Participants *maputils.Map[uuid.UUID, *participant.Participant]
 
 	MapLoaded bool
@@ -51,14 +49,12 @@ func NewGame(settings *settings.Settings, teams []*team.Team, states []state.Sta
 		panic("player handler cannot be nil")
 	}
 
-	series := state.NewScheduledStateSeries(states, 100*time.Millisecond)
-
 	game := &Game{
 		Settings:         settings,
 		Teams:            teams,
 		PlayerHandler:    playerHandler,
 		InventoryHandler: invHandler,
-		StateSeries:      series,
+		StateSeries:      state.NewStateSeries(states),
 		Participants:     maputils.NewMap[uuid.UUID, *participant.Participant](),
 	}
 	gameInstance = game
