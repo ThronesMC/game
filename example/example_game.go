@@ -5,6 +5,7 @@ import (
 	gamehandler "github.com/ThronesMC/game/example/handler"
 	"github.com/ThronesMC/game/example/states"
 	"github.com/ThronesMC/game/game"
+	"github.com/ThronesMC/game/game/modes"
 	"github.com/ThronesMC/game/game/participant"
 	"github.com/ThronesMC/game/game/settings"
 	"github.com/ThronesMC/game/game/team"
@@ -23,10 +24,7 @@ func NewExampleGame() *game.Game {
 			"Example",
 			"maps/",
 			"Example1",
-			settings.SoloMode,
-			2,
-			16,
-			4,
+			modes.Solo{},
 			func(tx *world.Tx, viewer *player.Player, pt *participant.Participant) string {
 				g := game.GetGame()
 				if vpt := g.GetParticipant(viewer); vpt != nil {

@@ -1,29 +1,17 @@
 package settings
 
 import (
+	"github.com/ThronesMC/game/game/modes"
 	"github.com/ThronesMC/game/game/participant"
 	"github.com/df-mc/dragonfly/server/player"
 	"github.com/df-mc/dragonfly/server/world"
-)
-
-type Mode string
-
-const (
-	NormalMode Mode = "Normal"
-	SoloMode   Mode = "Solo"
-	DuosMode   Mode = "Duos"
-	DuelsMode  Mode = "Duels"
-	SquadsMode Mode = "Squads"
 )
 
 type Settings struct {
 	GameName   string
 	MapsFolder string
 	MapName    string
-	Mode       Mode
-	MinPlayers int
-	MaxPlayers int
-	TeamSize   int
+	Mode       modes.Mode
 
 	NameFormat nameFormat
 }
@@ -42,15 +30,12 @@ func NewStaticSettings(gameName, mapsFolder, mapName string, nameFormat nameForm
 		GameName:   gameName,
 		MapsFolder: mapsFolder,
 		MapName:    mapName,
-		Mode:       NormalMode,
-		MinPlayers: 0,
-		MaxPlayers: -1,
-		TeamSize:   0,
+		Mode:       modes.Normal{},
 		NameFormat: nameFormat,
 	}
 }
 
-func NewGameSettings(gameName, mapsFolder, mapName string, mode Mode, minPlayers, maxPlayers, teamSize int, nameFormat nameFormat) *Settings {
+func NewGameSettings(gameName, mapsFolder, mapName string, mode modes.Mode, nameFormat nameFormat) *Settings {
 	if gameName == "" {
 		panic("game name cannot be empty")
 	}
@@ -60,16 +45,16 @@ func NewGameSettings(gameName, mapsFolder, mapName string, mode Mode, minPlayers
 	if mapName == "" {
 		panic("map name cannot be empty")
 	}
-	if minPlayers <= 0 || maxPlayers <= 0 {
+	if mode.MinimumTotalPlayers() <= 0 || mode.MaximumTotalPlayers() <= 0 {
 		panic("minPlayers and maxPlayers must be greater than 0")
 	}
-	if minPlayers > maxPlayers {
+	if mode.MinimumTotalPlayers() > mode.MaximumTotalPlayers() {
 		panic("minPlayers cannot be greater than maxPlayers")
 	}
-	if teamSize <= 0 {
+	if mode.NumberOfPlayersPerTeam() <= 0 {
 		panic("teamSize must be greater than 0")
 	}
-	if maxPlayers%teamSize != 0 {
+	if mode.MaximumTotalPlayers()%mode.NumberOfPlayersPerTeam() != 0 {
 		panic("maxPlayers must be divisible by teamSize")
 	}
 	return &Settings{
@@ -77,9 +62,6 @@ func NewGameSettings(gameName, mapsFolder, mapName string, mode Mode, minPlayers
 		MapsFolder: mapsFolder,
 		MapName:    mapName,
 		Mode:       mode,
-		MinPlayers: minPlayers,
-		MaxPlayers: maxPlayers,
-		TeamSize:   teamSize,
 		NameFormat: nameFormat,
 	}
 }

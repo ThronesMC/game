@@ -62,7 +62,7 @@ func (PlayerHandler) HandleJoin(p *player.Player) {
 		g.BroadcastMessagef(
 			tx,
 			"<yellow>%s</yellow> <green>has joined (<yellow>%d</yellow>/<yellow>%d</yellow>)!</green>",
-			p.Name(), g.ParticipantLen(), g.Settings.MaxPlayers,
+			p.Name(), g.ParticipantLen(), g.Settings.Mode.MaximumTotalPlayers(),
 		)
 	})
 }
@@ -88,7 +88,7 @@ func (PlayerHandler) HandleQuit(p *player.Player) {
 		g.BroadcastMessagef(
 			tx,
 			"<yellow>%s</yellow> <red>has left (<yellow>%d</yellow>/<yellow>%d</yellow>)!</red>",
-			p.Name(), g.ParticipantLen()-1, g.Settings.MaxPlayers,
+			p.Name(), g.ParticipantLen()-1, g.Settings.Mode.MaximumTotalPlayers(),
 		)
 	})
 }

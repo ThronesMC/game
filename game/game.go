@@ -136,11 +136,11 @@ func (g *Game) ParticipantLen() int {
 }
 
 func (g *Game) HasEnoughPlayers() bool {
-	return g.ParticipantLen() >= g.Settings.MinPlayers
+	return g.ParticipantLen() >= g.Settings.Mode.MinimumTotalPlayers()
 }
 
 func (g *Game) IsFull() bool {
-	return g.Settings.MaxPlayers != -1 && g.ParticipantLen() >= g.Settings.MaxPlayers
+	return g.Settings.Mode.MaximumTotalPlayers() != -1 && g.ParticipantLen() >= g.Settings.Mode.MaximumTotalPlayers()
 }
 
 func (g *Game) ParticipantsCallback(fn func(pt *participant.Participant)) {
@@ -170,7 +170,7 @@ func (g *Game) BroadcastTitle(tx *world.Tx, t title.Title) {
 func (g *Game) RandomAvailableTeam() (*team.Team, bool) {
 	var available []*team.Team
 	for _, t := range g.Teams {
-		if t.Teammates.Len() < g.Settings.TeamSize {
+		if t.Teammates.Len() < g.Settings.Mode.NumberOfPlayersPerTeam() {
 			available = append(available, t)
 		}
 	}
@@ -184,11 +184,11 @@ func (g *Game) RandomAvailableTeam() (*team.Team, bool) {
 
 func (g *Game) BalancedAvailableTeam() (*team.Team, bool) {
 	var bestTeam *team.Team
-	minCount := g.Settings.TeamSize + 1
+	minCount := g.Settings.Mode.NumberOfPlayersPerTeam() + 1
 
 	for _, t := range g.Teams {
 		count := t.Teammates.Len()
-		if count < g.Settings.TeamSize && count < minCount {
+		if count < g.Settings.Mode.NumberOfPlayersPerTeam() && count < minCount {
 			minCount = count
 			bestTeam = t
 		}
