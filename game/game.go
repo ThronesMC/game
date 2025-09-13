@@ -16,6 +16,7 @@ import (
 	"iter"
 	"math/rand"
 	"os"
+	"path"
 	"path/filepath"
 	"time"
 
@@ -29,6 +30,7 @@ import (
 var gameInstance *Game
 
 type Game struct {
+	id       uuid.UUID
 	Settings *settings.Settings
 	Teams    []*team.Team
 
@@ -51,6 +53,7 @@ func NewGame(settings *settings.Settings, teams []*team.Team, states []state.Sta
 	}
 
 	game := &Game{
+		id:               uuid.New(),
 		Settings:         settings,
 		Teams:            teams,
 		PlayerHandler:    playerHandler,
@@ -93,7 +96,7 @@ func (g *Game) LoadGameMapWithConfig(config config.MapData) error {
 		return fmt.Errorf("failed unmarshalling config.json: %w", err)
 	}
 
-	g.WorldFolder = "world"
+	g.WorldFolder = path.Join(".", "worlds", g.id.String())
 
 	if err := os.RemoveAll(g.WorldFolder); err != nil {
 		return fmt.Errorf("failed to remove existing world folder: %w", err)
