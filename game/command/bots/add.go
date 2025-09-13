@@ -5,6 +5,7 @@ import (
 	"github.com/ThronesMC/game/game"
 	"github.com/ThronesMC/game/game/handler_custom"
 	"github.com/ThronesMC/game/game/mechanic/bot"
+	"github.com/ThronesMC/game/game/skins"
 	"github.com/df-mc/dragonfly/server/cmd"
 	"github.com/df-mc/dragonfly/server/player"
 	"github.com/df-mc/dragonfly/server/world"
@@ -47,7 +48,7 @@ func (asc AddSubCommand) Run(source cmd.Source, output *cmd.Output, tx *world.Tx
 
 	go func() {
 		for i := 0; i < number; i++ {
-			if err := game.SkinManager.GenerateSkin(i); err != nil {
+			if err := skins.SkinManager.GenerateSkin(i); err != nil {
 				log.Fatalf("Could not generate a new skin: %v", err)
 			}
 			p.H().ExecWorld(func(tx *world.Tx, e world.Entity) {

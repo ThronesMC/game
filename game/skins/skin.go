@@ -1,4 +1,4 @@
-package game
+package skins
 
 import (
 	"github.com/ThronesMC/game/game/utils/randomskins/skin"
