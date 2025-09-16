@@ -37,6 +37,17 @@ func (sm *Map[K, V]) Store(key K, value V) {
 	sm.m[key] = value
 }
 
+func (sm *Map[K, V]) LoadOrStore(key K, value V) (actual V) {
+	sm.mu.Lock()
+	defer sm.mu.Unlock()
+	actual, ok := sm.m[key]
+	if !ok {
+		sm.m[key] = value
+		actual = value
+	}
+	return actual
+}
+
 func (sm *Map[K, V]) Delete(key K) {
 	sm.mu.Lock()
 	defer sm.mu.Unlock()
