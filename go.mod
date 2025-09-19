@@ -3,7 +3,7 @@ module github.com/ThronesMC/game
 go 1.25.0
 
 require (
-	github.com/df-mc/dragonfly v0.10.6-0.20250817203556-60bcf6b7432b
+	github.com/df-mc/dragonfly v0.10.6-0.20250915205312-2e9501025724
 	github.com/df-mc/npc v1.0.5
 	github.com/go-gl/mathgl v1.2.0
 	github.com/google/uuid v1.6.0
@@ -31,4 +31,4 @@ require (
 	golang.org/x/text v0.29.0 // indirect
 )
 
-replace github.com/df-mc/dragonfly => github.com/Studgi/dragonfly v0.0.0-20250918004202-d81fdda68a0b
+replace github.com/df-mc/dragonfly => github.com/Studgi/dragonfly v0.0.0-20250919124142-8b1a9049bd3d

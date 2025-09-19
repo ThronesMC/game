@@ -4,6 +4,7 @@ import (
 	"github.com/ThronesMC/game/game"
 	"github.com/ThronesMC/game/game/handler_custom"
 	"github.com/df-mc/dragonfly/server/entity"
+	"github.com/go-gl/mathgl/mgl32"
 	"net"
 	"time"
 
@@ -341,7 +342,7 @@ func (cph ChainedPlayerHandler) HandleItemDrop(ctx *player.Context, s item.Stack
 	cph.Next.HandleItemDrop(ctx, s)
 }
 
-func (cph ChainedPlayerHandler) HandleMount(ctx *player.Context, r entity.Rideable, seatPos *mgl64.Vec3, driver *bool) {
+func (cph ChainedPlayerHandler) HandleMount(ctx *player.Context, r entity.Rideable, seatPos *mgl32.Vec3, driver *bool) {
 	if cph.Middle != nil {
 		cph.Middle.HandleMount(ctx, r, seatPos, driver)
 		if ctx.Cancelled() {
