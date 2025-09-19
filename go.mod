@@ -1,6 +1,6 @@
 module github.com/ThronesMC/game
 
-go 1.24.5
+go 1.25.0
 
 require (
 	github.com/df-mc/dragonfly v0.10.6-0.20250817203556-60bcf6b7432b
@@ -23,10 +23,12 @@ require (
 	github.com/muhammadmuzzammil1998/jsonc v1.0.0 // indirect
 	github.com/sandertv/go-raknet v1.14.3-0.20250305181847-6af3e95113d6 // indirect
 	github.com/segmentio/fasthash v1.0.3 // indirect
-	golang.org/x/crypto v0.41.0 // indirect
-	golang.org/x/exp v0.0.0-20250819193227-8b4c13bb791b // indirect
-	golang.org/x/mod v0.27.0 // indirect
-	golang.org/x/net v0.43.0 // indirect
-	golang.org/x/oauth2 v0.30.0 // indirect
-	golang.org/x/text v0.28.0 // indirect
+	golang.org/x/crypto v0.42.0 // indirect
+	golang.org/x/exp v0.0.0-20250911091902-df9299821621 // indirect
+	golang.org/x/mod v0.28.0 // indirect
+	golang.org/x/net v0.44.0 // indirect
+	golang.org/x/oauth2 v0.31.0 // indirect
+	golang.org/x/text v0.29.0 // indirect
 )
+
+replace github.com/df-mc/dragonfly => github.com/Studgi/dragonfly v0.0.0-20250918004202-d81fdda68a0b
