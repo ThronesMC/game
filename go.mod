@@ -31,4 +31,4 @@ require (
 	golang.org/x/text v0.29.0 // indirect
 )
 
-replace github.com/df-mc/dragonfly => github.com/Studgi/dragonfly v0.0.0-20250919124142-8b1a9049bd3d
+replace github.com/df-mc/dragonfly => github.com/Studgi/dragonfly v0.0.0-20250920180421-52e4e0c04e97

@@ -4,7 +4,6 @@ import (
 	"github.com/ThronesMC/game/game"
 	"github.com/ThronesMC/game/game/handler_custom"
 	"github.com/df-mc/dragonfly/server/entity"
-	"github.com/go-gl/mathgl/mgl32"
 	"net"
 	"time"
 
@@ -342,24 +341,24 @@ func (cph ChainedPlayerHandler) HandleItemDrop(ctx *player.Context, s item.Stack
 	cph.Next.HandleItemDrop(ctx, s)
 }
 
-func (cph ChainedPlayerHandler) HandleMount(ctx *player.Context, r entity.Rideable, seatPos *mgl32.Vec3, driver *bool) {
+func (cph ChainedPlayerHandler) HandleMountEntity(ctx *player.Context, rideable entity.Rideable, seatIndex *int) {
 	if cph.Middle != nil {
-		cph.Middle.HandleMount(ctx, r, seatPos, driver)
+		cph.Middle.HandleMountEntity(ctx, rideable, seatIndex)
 		if ctx.Cancelled() {
 			return
 		}
 	}
-	cph.Next.HandleMount(ctx, r, seatPos, driver)
+	cph.Next.HandleMountEntity(ctx, rideable, seatIndex)
 }
 
-func (cph ChainedPlayerHandler) HandleDismount(ctx *player.Context, r entity.Rideable) {
+func (cph ChainedPlayerHandler) HandleDismountEntity(ctx *player.Context, rideable entity.Rideable) {
 	if cph.Middle != nil {
-		cph.Middle.HandleDismount(ctx, r)
+		cph.Middle.HandleDismountEntity(ctx, rideable)
 		if ctx.Cancelled() {
 			return
 		}
 	}
-	cph.Next.HandleDismount(ctx, r)
+	cph.Next.HandleDismountEntity(ctx, rideable)
 }
 
 func (cph ChainedPlayerHandler) HandleTransfer(ctx *player.Context, addr *net.UDPAddr) {
