@@ -16,7 +16,7 @@ type Team struct {
 
 	Teammates *maputils.Map[uuid.UUID, *participant.Participant]
 
-	TeamData config.TeamData
+	teamData config.TeamData
 }
 
 func NewTeam(id string, name string, color TeamColour, data config.TeamData) *Team {
@@ -25,7 +25,7 @@ func NewTeam(id string, name string, color TeamColour, data config.TeamData) *Te
 		name:      name,
 		color:     color,
 		Teammates: maputils.NewMap[uuid.UUID, *participant.Participant](),
-		TeamData:  data,
+		teamData:  data,
 	}
 }
 
@@ -189,3 +189,7 @@ const (
 	Lapis
 	Amethyst
 )
+
+func GetTeamData[T config.TeamData](t *Team) T {
+	return t.teamData.(T)
+}

@@ -50,3 +50,7 @@ func (pt *Participant) InState(s State) bool {
 func (pt *Participant) SetState(s State) {
 	pt.state = s
 }
+
+func GetParticipantData[T config.ParticipantData](pt *Participant) T {
+	return pt.participantData.(T)
+}
