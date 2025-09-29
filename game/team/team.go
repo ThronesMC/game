@@ -190,6 +190,10 @@ const (
 	Amethyst
 )
 
+func (t *Team) SetTeamData(data config.TeamData) {
+	t.teamData = data
+}
+
 func GetTeamData[T config.TeamData](t *Team) T {
 	return t.teamData.(T)
 }

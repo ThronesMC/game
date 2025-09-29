@@ -51,6 +51,10 @@ func (pt *Participant) SetState(s State) {
 	pt.state = s
 }
 
+func (pt *Participant) SetParticipantData(data config.ParticipantData) {
+	pt.participantData = data
+}
+
 func GetParticipantData[T config.ParticipantData](pt *Participant) T {
 	return pt.participantData.(T)
 }
