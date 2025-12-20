@@ -301,7 +301,7 @@ func (cph ChainedPlayerHandler) HandleLecternPageTurn(ctx *player.Context, pos c
 	cph.Next.HandleLecternPageTurn(ctx, pos, oldPage, newPage)
 }
 
-func (cph ChainedPlayerHandler) HandleItemDamage(ctx *player.Context, i item.Stack, damage int) {
+func (cph ChainedPlayerHandler) HandleItemDamage(ctx *player.Context, i item.Stack, damage *int) {
 	if cph.Middle != nil {
 		cph.Middle.HandleItemDamage(ctx, i, damage)
 		if ctx.Cancelled() {
