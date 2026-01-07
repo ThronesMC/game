@@ -9,7 +9,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/josscoder/fsmgo v0.0.0-20250819235246-73a9bb9472c9
 	github.com/samber/lo v1.52.0
-	github.com/sandertv/gophertunnel v1.51.1
+	github.com/sandertv/gophertunnel v1.52.2
 )
 
 require (
@@ -21,7 +21,7 @@ require (
 	github.com/go-jose/go-jose/v4 v4.1.3 // indirect
 	github.com/golang/snappy v1.0.0 // indirect
 	github.com/klauspost/compress v1.18.2 // indirect
-	github.com/sandertv/go-raknet v1.14.3-0.20250305181847-6af3e95113d6 // indirect
+	github.com/sandertv/go-raknet v1.15.0 // indirect
 	github.com/segmentio/fasthash v1.0.3 // indirect
 	golang.org/x/exp v0.0.0-20251219203646-944ab1f22d93 // indirect
 	golang.org/x/mod v0.31.0 // indirect
@@ -30,4 +30,4 @@ require (
 	golang.org/x/text v0.32.0 // indirect
 )
 
-replace github.com/df-mc/dragonfly => github.com/Studgi/dragonfly v0.0.0-20251220232750-054406fc826b
+replace github.com/df-mc/dragonfly => github.com/Studgi/dragonfly v0.0.0-20260107224211-7329098ade87

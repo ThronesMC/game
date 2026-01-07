@@ -291,6 +291,16 @@ func (cph ChainedPlayerHandler) HandleSignEdit(ctx *player.Context, pos cube.Pos
 	cph.Next.HandleSignEdit(ctx, pos, frontSide, oldText, newText)
 }
 
+func (cph ChainedPlayerHandler) HandleSleep(ctx *player.Context, sendReminder *bool) {
+	if cph.Middle != nil {
+		cph.Middle.HandleSleep(ctx, sendReminder)
+		if ctx.Cancelled() {
+			return
+		}
+	}
+	cph.Next.HandleSleep(ctx, sendReminder)
+}
+
 func (cph ChainedPlayerHandler) HandleLecternPageTurn(ctx *player.Context, pos cube.Pos, oldPage int, newPage *int) {
 	if cph.Middle != nil {
 		cph.Middle.HandleLecternPageTurn(ctx, pos, oldPage, newPage)
