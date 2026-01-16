@@ -14,6 +14,7 @@ import (
 	"github.com/df-mc/dragonfly/server/world"
 	"github.com/josscoder/fsmgo/state"
 	"github.com/sandertv/gophertunnel/minecraft/text"
+	"time"
 )
 
 func NewExampleGame() *game.Game {
@@ -45,10 +46,10 @@ func NewExampleGame() *game.Game {
 			team.NewTeam("blue", "Blue", team.Blue, &teamCfg),
 			team.NewTeam("yellow", "Yellow", team.Yellow, &teamCfg),
 		},
-		[]state.State{
+		state.NewScheduledStateSeries([]state.State{
 			states.NewPreGameStateState(),
 			states.NewEndGameState(),
-		},
+		}, 1*time.Second),
 		handlerutils.PlayerChainHandlers(
 			gamehandler.PlayerHandler{},
 		),

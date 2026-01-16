@@ -12,19 +12,17 @@ import (
 	"github.com/ThronesMC/game/game/utils/maputils"
 	"github.com/ThronesMC/game/game/utils/ziputils"
 	"github.com/df-mc/dragonfly/server/item/inventory"
+	"github.com/df-mc/dragonfly/server/player"
+	"github.com/df-mc/dragonfly/server/player/title"
+	"github.com/df-mc/dragonfly/server/world"
+	"github.com/google/uuid"
+	"github.com/josscoder/fsmgo/state"
 	"github.com/sandertv/gophertunnel/minecraft/text"
 	"iter"
 	"math/rand"
 	"os"
 	"path"
 	"path/filepath"
-	"time"
-
-	"github.com/df-mc/dragonfly/server/player"
-	"github.com/df-mc/dragonfly/server/player/title"
-	"github.com/df-mc/dragonfly/server/world"
-	"github.com/google/uuid"
-	"github.com/josscoder/fsmgo/state"
 )
 
 var gameInstance *Game
@@ -47,7 +45,7 @@ type Game struct {
 	WorldFolder string
 }
 
-func NewGame(settings *settings.Settings, teams []*team.Team, states []state.State, playerHandler handler_custom.JoinHandler, invHandler inventory.Handler) *Game {
+func NewGame(settings *settings.Settings, teams []*team.Team, states *state.ScheduledStateSeries, playerHandler handler_custom.JoinHandler, invHandler inventory.Handler) *Game {
 	if playerHandler == nil {
 		panic("player handler cannot be nil")
 	}
@@ -58,7 +56,7 @@ func NewGame(settings *settings.Settings, teams []*team.Team, states []state.Sta
 		Teams:            teams,
 		PlayerHandler:    playerHandler,
 		InventoryHandler: invHandler,
-		StateSeries:      state.NewScheduledStateSeries(states, 1*time.Second),
+		StateSeries:      states,
 		Participants:     maputils.NewMap[uuid.UUID, *participant.Participant](),
 	}
 	gameInstance = game
