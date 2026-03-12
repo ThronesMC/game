@@ -26,7 +26,7 @@ func DefaultResetOpts() ResetOpts {
 		Extinguish:        true,
 		HealAmount:        20,
 		MaxHealth:         20,
-		ResetArmour:       true,
+		ResetArmour:       false,
 		ResetFallDistance: true,
 		ResetFood:         true,
 		ResetHealth:       true,
