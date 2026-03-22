@@ -52,7 +52,7 @@ func ResetPlayer(p *player.Player, opts *ResetOpts) {
 	if opts.ResetArmour {
 		p.Armour().Clear()
 	}
-	p.MoveItemsToInventory() //
+	p.MoveItemsToInventory()
 
 	if opts.Extinguish {
 		p.Extinguish()
