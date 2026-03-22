@@ -1,7 +1,6 @@
 package playerutils
 
 import (
-	"github.com/df-mc/dragonfly/server/item"
 	"github.com/df-mc/dragonfly/server/player"
 )
 
@@ -54,7 +53,6 @@ func ResetPlayer(p *player.Player, opts *ResetOpts) {
 		p.Armour().Clear()
 	}
 	p.MoveItemsToInventory() //
-	p.SetHeldItems(item.Stack{}, item.Stack{})
 
 	if opts.Extinguish {
 		p.Extinguish()
