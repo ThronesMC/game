@@ -2,6 +2,10 @@ package states
 
 import (
 	"fmt"
+	"log"
+	"math"
+	"time"
+
 	"github.com/ThronesMC/game/example/config"
 	"github.com/ThronesMC/game/game"
 	"github.com/ThronesMC/game/game/mechanic/bot"
@@ -11,15 +15,18 @@ import (
 	"github.com/df-mc/dragonfly/server/player/bossbar"
 	"github.com/df-mc/dragonfly/server/world"
 	"github.com/josscoder/fsmgo/state"
-	"log"
-	"math"
-	"time"
 )
 
+// PreGameState manages the example pre-game lobby: spawns players, refreshes
+// nametags, and displays a boss bar countdown.
 type PreGameState struct {
 	*state.BaseState
 }
 
+// Compile-time check that PreGameState implements state.Lifecycle.
+var _ state.Lifecycle = (*PreGameState)(nil)
+
+// NewPreGameStateState creates a new example pre-game state.
 func NewPreGameStateState() *PreGameState {
 	s := &PreGameState{}
 	s.BaseState = state.NewBaseState(s)
@@ -33,7 +40,7 @@ func (s *PreGameState) OnStart() {
 	log.Println("PreGameState onStart")
 }
 
-func (s *PreGameState) OnUpdate() {
+func (s *PreGameState) OnUpdate(_ time.Duration) {
 	log.Println("PreGameState OnUpdate")
 
 	g := game.GetGame()

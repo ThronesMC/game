@@ -6,10 +6,16 @@ import (
 	"github.com/go-gl/mathgl/mgl64"
 )
 
+// ChainedWorldHandler composes two world.Handler implementations. Calls are
+// forwarded to Middle first, then to Next unless the context is cancelled.
+// A nil Middle is treated as a no-op passthrough.
 type ChainedWorldHandler struct {
 	Middle world.Handler
 	Next   world.Handler
 }
+
+// Compile-time check that ChainedWorldHandler implements world.Handler.
+var _ world.Handler = ChainedWorldHandler{}
 
 func (cwh ChainedWorldHandler) HandleLiquidFlow(ctx *world.Context, from, into cube.Pos, liquid world.Liquid, replaced world.Block) {
 	if cwh.Middle != nil {
@@ -113,6 +119,16 @@ func (cwh ChainedWorldHandler) HandleExplosion(ctx *world.Context, position mgl6
 		}
 	}
 	cwh.Next.HandleExplosion(ctx, position, entities, blocks, itemDropChance, spawnFire)
+}
+
+func (cwh ChainedWorldHandler) HandleRedstoneUpdate(ctx *world.Context, pos cube.Pos) {
+	if cwh.Middle != nil {
+		cwh.Middle.HandleRedstoneUpdate(ctx, pos)
+		if ctx.Cancelled() {
+			return
+		}
+	}
+	cwh.Next.HandleRedstoneUpdate(ctx, pos)
 }
 
 func (cwh ChainedWorldHandler) HandleClose(tx *world.Tx) {

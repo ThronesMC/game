@@ -3,7 +3,6 @@ package bots
 import (
 	"fmt"
 	"github.com/ThronesMC/game/game"
-	"github.com/ThronesMC/game/game/handler_custom"
 	"github.com/ThronesMC/game/game/mechanic/bot"
 	"github.com/ThronesMC/game/game/skins"
 	"github.com/df-mc/dragonfly/server/cmd"
@@ -54,8 +53,8 @@ func (asc AddSubCommand) Run(source cmd.Source, output *cmd.Output, tx *world.Tx
 			p.H().ExecWorld(func(tx *world.Tx, e world.Entity) {
 				skin := npc.MustSkin(npc.MustParseTexture(path.Join(".", "skins", fmt.Sprintf("skin_%v.png", i))), npc.DefaultModel)
 				bot.AddBot(tx, p.Position(), p.Rotation(), skin, func(b *player.Player) {
+					g.PlayerHandler.HandleJoin(b)
 					b.Handle(g.PlayerHandler)
-					b.Handler().(handler_custom.JoinHandler).HandleJoin(b)
 				})
 			})
 			time.Sleep(500 * time.Millisecond)

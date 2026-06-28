@@ -2,20 +2,26 @@ package states
 
 import (
 	"fmt"
+	"log"
+	"math"
+	"time"
+
 	"github.com/ThronesMC/game/game"
 	"github.com/ThronesMC/game/game/participant"
 	"github.com/df-mc/dragonfly/server/player/bossbar"
 	"github.com/df-mc/dragonfly/server/world"
 	"github.com/josscoder/fsmgo/state"
-	"log"
-	"math"
-	"time"
 )
 
+// EndGameState manages the example end-game phase with a boss bar countdown.
 type EndGameState struct {
 	*state.BaseState
 }
 
+// Compile-time check that EndGameState implements state.Lifecycle.
+var _ state.Lifecycle = (*EndGameState)(nil)
+
+// NewEndGameState creates a new example end-game state.
 func NewEndGameState() *EndGameState {
 	s := &EndGameState{}
 	s.BaseState = state.NewBaseState(s)
@@ -26,7 +32,7 @@ func (s *EndGameState) OnStart() {
 	log.Println("EndGameState onStart")
 }
 
-func (s *EndGameState) OnUpdate() {
+func (s *EndGameState) OnUpdate(_ time.Duration) {
 	log.Println("EndGameState onUpdate")
 
 	duration := float64(s.GetDuration().Milliseconds())
