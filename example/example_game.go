@@ -1,6 +1,8 @@
 package main
 
 import (
+	"context"
+
 	"github.com/ThronesMC/game/example/config"
 	gamehandler "github.com/ThronesMC/game/example/handler"
 	"github.com/ThronesMC/game/example/states"
@@ -46,7 +48,7 @@ func NewExampleGame() *game.Game {
 			team.NewTeam("blue", "Blue", team.Blue, &teamCfg),
 			team.NewTeam("yellow", "Yellow", team.Yellow, &teamCfg),
 		},
-		state.NewScheduledStateSeries([]state.State{
+		state.NewScheduledStateSeries(context.Background(), []state.State{
 			states.NewPreGameStateState(),
 			states.NewEndGameState(),
 		}, 1*time.Second),

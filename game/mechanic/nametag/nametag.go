@@ -20,7 +20,7 @@ func RefreshNameTag(tx *world.Tx, viewer *player.Player, pt *participant.Partici
 	viewerSession := dfutils.Session(viewer)
 	md := dfutils.ParseEntityMetadata(viewerSession, pt.TXPlayer(tx))
 
-	md[protocol.EntityDataKeyName] = text.Colourf(g.Settings.NameFormat(tx, viewer, pt))
+	md[protocol.EntityDataKeyName] = text.Colourf("%s", g.Settings.NameFormat(tx, viewer, pt))
 
 	dfutils.WritePacket(viewerSession, &packet.SetActorData{
 		EntityRuntimeID: dfutils.EntityRuntimeID(viewerSession, pt.TXPlayer(tx)),

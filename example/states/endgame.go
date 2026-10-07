@@ -42,7 +42,7 @@ func (s *EndGameState) OnUpdate(_ time.Duration) {
 	remainingSecs := float64(s.GetRemainingTime().Milliseconds()) / 1000.0
 	remainingStr := fmt.Sprintf("%.1f s", remainingSecs)
 
-	game.GetGame().World.Exec(func(tx *world.Tx) {
+	game.GetGame().World.Do(func(tx *world.Tx) {
 		game.GetGame().ParticipantsCallback(func(pt *participant.Participant) {
 			pt.TXPlayer(tx).SendBossBar(
 				bossbar.New("EndGameState - " + remainingStr).

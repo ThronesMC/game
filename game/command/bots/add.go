@@ -50,7 +50,7 @@ func (asc AddSubCommand) Run(source cmd.Source, output *cmd.Output, tx *world.Tx
 			if err := skins.SkinManager.GenerateSkin(i); err != nil {
 				log.Fatalf("Could not generate a new skin: %v", err)
 			}
-			p.H().ExecWorld(func(tx *world.Tx, e world.Entity) {
+			p.H().Do(func(tx *world.Tx, e world.Entity) {
 				skin := npc.MustSkin(npc.MustParseTexture(path.Join(".", "skins", fmt.Sprintf("skin_%v.png", i))), npc.DefaultModel)
 				bot.AddBot(tx, p.Position(), p.Rotation(), skin, func(b *player.Player) {
 					g.PlayerHandler.HandleJoin(b)

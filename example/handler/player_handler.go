@@ -56,9 +56,9 @@ func (PlayerHandler) HandleJoin(p *player.Player) {
 	spawn.SetSpawnOccupied(team.GetID(), spawnIndex, p.UUID())
 	cage.BuildCage(p.Tx(), p.UUID(), blockPos, block.Glass{})
 
-	p.Messagef(text.Colourf("<orange>You joined team %s", team.GetColour().AsTextColour(team.GetName())))
+	p.Message(text.Colourf("<orange>You joined team %s", team.GetColour().AsTextColour(team.GetName())))
 
-	g.World.Exec(func(tx *world.Tx) {
+	g.World.Do(func(tx *world.Tx) {
 		g.BroadcastMessagef(
 			tx,
 			"<yellow>%s</yellow> <green>has joined (<yellow>%d</yellow>/<yellow>%d</yellow>)!</green>",
@@ -84,7 +84,7 @@ func (PlayerHandler) HandleQuit(p *player.Player) {
 	g.RemoveFromTeam(pt)
 	cage.RemoveCage(p.Tx(), p.UUID())
 
-	g.World.Exec(func(tx *world.Tx) {
+	g.World.Do(func(tx *world.Tx) {
 		g.BroadcastMessagef(
 			tx,
 			"<yellow>%s</yellow> <red>has left (<yellow>%d</yellow>/<yellow>%d</yellow>)!</red>",

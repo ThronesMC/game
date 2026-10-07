@@ -111,24 +111,44 @@ func (cwh ChainedWorldHandler) HandleEntityDespawn(tx *world.Tx, e world.Entity)
 	cwh.Next.HandleEntityDespawn(tx, e)
 }
 
-func (cwh ChainedWorldHandler) HandleExplosion(ctx *world.Context, position mgl64.Vec3, entities *[]world.Entity, blocks *[]cube.Pos, itemDropChance *float64, spawnFire *bool) {
+func (cwh ChainedWorldHandler) HandlePortalCreate(ctx *world.Context, portalType world.Dimension, positions []cube.Pos) {
 	if cwh.Middle != nil {
-		cwh.Middle.HandleExplosion(ctx, position, entities, blocks, itemDropChance, spawnFire)
+		cwh.Middle.HandlePortalCreate(ctx, portalType, positions)
 		if ctx.Cancelled() {
 			return
 		}
 	}
-	cwh.Next.HandleExplosion(ctx, position, entities, blocks, itemDropChance, spawnFire)
+	cwh.Next.HandlePortalCreate(ctx, portalType, positions)
 }
 
-func (cwh ChainedWorldHandler) HandleRedstoneUpdate(ctx *world.Context, pos cube.Pos) {
+func (cwh ChainedWorldHandler) HandlePortalActivate(ctx *world.Context, portalType world.Dimension, positions []cube.Pos) {
 	if cwh.Middle != nil {
-		cwh.Middle.HandleRedstoneUpdate(ctx, pos)
+		cwh.Middle.HandlePortalActivate(ctx, portalType, positions)
 		if ctx.Cancelled() {
 			return
 		}
 	}
-	cwh.Next.HandleRedstoneUpdate(ctx, pos)
+	cwh.Next.HandlePortalActivate(ctx, portalType, positions)
+}
+
+func (cwh ChainedWorldHandler) HandleExplosion(ctx *world.Context, src world.ExplosionSource, entities *[]world.Entity, blocks *[]cube.Pos, itemDropChance *float64, spawnFire *bool) {
+	if cwh.Middle != nil {
+		cwh.Middle.HandleExplosion(ctx, src, entities, blocks, itemDropChance, spawnFire)
+		if ctx.Cancelled() {
+			return
+		}
+	}
+	cwh.Next.HandleExplosion(ctx, src, entities, blocks, itemDropChance, spawnFire)
+}
+
+func (cwh ChainedWorldHandler) HandleRedstoneUpdate(ctx *world.Context, update world.RedstoneUpdate) {
+	if cwh.Middle != nil {
+		cwh.Middle.HandleRedstoneUpdate(ctx, update)
+		if ctx.Cancelled() {
+			return
+		}
+	}
+	cwh.Next.HandleRedstoneUpdate(ctx, update)
 }
 
 func (cwh ChainedWorldHandler) HandleClose(tx *world.Tx) {

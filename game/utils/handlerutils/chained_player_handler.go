@@ -127,6 +127,16 @@ func (cph ChainedPlayerHandler) HandleHurt(ctx *player.Context, damage *float64,
 	cph.Next.HandleHurt(ctx, damage, immune, attackImmunity, src)
 }
 
+func (cph ChainedPlayerHandler) HandleSetOnFire(ctx *player.Context, duration *time.Duration) {
+	if cph.Middle != nil {
+		cph.Middle.HandleSetOnFire(ctx, duration)
+		if ctx.Cancelled() {
+			return
+		}
+	}
+	cph.Next.HandleSetOnFire(ctx, duration)
+}
+
 func (cph ChainedPlayerHandler) HandleDeath(p *player.Player, src world.DamageSource, keepInv *bool) {
 	if cph.Middle != nil {
 		cph.Middle.HandleDeath(p, src, keepInv)
