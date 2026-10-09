@@ -1,7 +1,9 @@
 package bot
 
 import (
+	"github.com/ThronesMC/game/game"
 	"github.com/ThronesMC/game/game/utils/dfutils"
+	"github.com/ThronesMC/game/game/utils/handlerutils"
 	"github.com/df-mc/dragonfly/server/block/cube"
 	"github.com/df-mc/dragonfly/server/player"
 	"github.com/df-mc/dragonfly/server/player/skin"
@@ -40,8 +42,32 @@ func AddBot(tx *world.Tx, pos mgl64.Vec3, rot cube.Rotation, s skin.Skin, onCrea
 
 	newBot := npc.Create(settings, tx, nil)
 
+	// npc.Create installs a handler of its own, which keeps a chunk loader
+	// following the bot so it does not unload. Put the game's handlers in front
+	// of that one rather than over it.
+	//
+	// Without the game's handlers a bot takes no part in the game's damage or
+	// death handling at all: whatever a game does when a player dies - score it,
+	// put them in spectator, respawn them - never happens, so a bot can be
+	// killed over and over without ever dying.
+	//
+	// Its join handler is deliberately not run. A bot is placed by whatever
+	// spawned it, which has already decided its skin, team and inventory, and
+	// the join chain would undo those.
+	if g := game.GetGame(); g != nil && g.PlayerHandler != nil {
+		newBot.Handle(handlerutils.PlayerChainHandlers(joinable{Handler: newBot.Handler()}, g.PlayerHandler))
+	}
+
 	onCreate(newBot)
 }
+
+// joinable adapts a plain player.Handler to the JoinHandler the chain helpers
+// take, for handlers that have nothing to do when a player joins.
+type joinable struct {
+	player.Handler
+}
+
+func (joinable) HandleJoin(*player.Player) {}
 
 func RemoveBot(tx *world.Tx, name string) bool {
 	for e := range tx.Entities() {
